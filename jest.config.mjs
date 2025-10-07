@@ -107,7 +107,7 @@ const config = {
   // projects: undefined,
 
   // Use this configuration option to add custom reporters to Jest
-  reporters: ["github-actions"],
+  reporters: ["default", "github-actions"],
 
   // Automatically reset mock state before every test
   // resetMocks: false,
@@ -146,6 +146,7 @@ const config = {
 
   // The test environment that will be used for testing
   // testEnvironment: "jest-environment-node",
+  testEnvironment: "node",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
