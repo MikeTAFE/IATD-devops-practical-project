@@ -1,0 +1,49 @@
+name: Mike's GitHub Actions 
+run-name: ${{ github.actor }} is testing out GitHub Actions 🤓
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths-ignore:
+      - "README.md"
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, synchronize, reopened]
+jobs:
+  mike-github-actions-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The branch name is ${{ github.ref }} and the repo is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v5
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "This job's status is ${{ job.status }}."
+  node-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This will set up Node and run the code."
+      - name: Check out repo
+        uses: actions/checkout@v5
+      - run: echo "The ${{ github.repository }} repo has been cloned to the runner."
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22.11.x'
+
+          # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
+          # Package manager should be pre-installed
+          # Default: ''
+          cache: 'npm'
+      - name: Install NPM packages
+        run: npm ci
+      - name: Run unit test
+        run: npm test
