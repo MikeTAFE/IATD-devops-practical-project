@@ -1,9 +1,16 @@
-FROM node:20.12-alpine
+# Base image
+FROM node:22-alpine
 
-COPY package.json package-lock.json ./
+# Create and set the working directory inside the container
+WORKDIR /app
+
+# Copy local files to container
+COPY . .
 
 RUN npm install
 
-COPY ./ ./
+# Docker build will ONLY succeed if unit tests pass
+RUN npm test
 
+# Run `npm start` when the container is started
 CMD [ "npm", "start" ]
